@@ -1,6 +1,6 @@
 function connectdb() {
   const mongoose = require("mongoose");
-  const encrypt = require("mongoose-encryption");
+  // const encrypt = require("mongoose-encryption");
 
   // Connection URL
   const url = "mongodb://localhost:27017";
@@ -22,12 +22,12 @@ function connectdb() {
     password: String,
   });
 
-  let secret = process.env.ENCRYP_STRING;
-  userSchema.plugin(encrypt, {
-    secret: secret,
-    encryptedFields: ["password"],
-    additionalAuthenticatedFields: ["username"],
-  });
+  // let secret = process.env.ENCRYP_STRING;
+  // userSchema.plugin(encrypt, {
+  //   secret: secret,
+  //   encryptedFields: ["password"],
+  //   additionalAuthenticatedFields: ["username"],
+  // });
 
   //create a user mongoose modal
   const user = mongoose.model(users_collection, userSchema);

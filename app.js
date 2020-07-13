@@ -3,8 +3,8 @@ const bp = require("body-parser");
 const debug = require("debug")("app");
 const path = require("path");
 const app = express();
+var md5 = require("md5");
 require("dotenv").config();
-// const mongoose = require("mongoose");
 const ejsLint = require("ejs-lint");
 const db_form_details = require("./db");
 const db_users = require("./users");
@@ -35,7 +35,7 @@ app.get("/registare", (req, res) => {
 app.post("/registare", (req, res, next) => {
   let new_user_details = {
     username: req.body.username,
-    password: req.body.password,
+    password: md5(req.body.password),
   };
   db_users.registare_user(user, new_user_details);
   res.render("index");
@@ -48,7 +48,7 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res, next) => {
   let login_user_details = {
     username: req.body.username,
-    password: req.body.password,
+    password: md5(req.body.password),
   };
   (async function () {
     let loggedIn = await db_users.login_user(user, login_user_details);
