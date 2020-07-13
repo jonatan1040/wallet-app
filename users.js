@@ -1,5 +1,6 @@
 function connectdb() {
   const mongoose = require("mongoose");
+  const encrypt = require("mongoose-encryption");
 
   // Connection URL
   const url = "mongodb://localhost:27017";
@@ -19,6 +20,13 @@ function connectdb() {
   const userSchema = new mongoose.Schema({
     username: String,
     password: String,
+  });
+
+  let secret = process.env.ENCRYP_STRING;
+  userSchema.plugin(encrypt, {
+    secret: secret,
+    encryptedFields: ["password"],
+    additionalAuthenticatedFields: ["username"],
   });
 
   //create a user mongoose modal
@@ -50,6 +58,8 @@ async function login_user(loginUser, login_user_details) {
           if (foundUser.password === login_user_details.password) {
             result = true;
           }
+        } else {
+          console.log("err", err);
         }
       }
     );

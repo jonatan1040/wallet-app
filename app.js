@@ -3,6 +3,7 @@ const bp = require("body-parser");
 const debug = require("debug")("app");
 const path = require("path");
 const app = express();
+require("dotenv").config();
 // const mongoose = require("mongoose");
 const ejsLint = require("ejs-lint");
 const db_form_details = require("./db");
